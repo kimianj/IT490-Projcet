@@ -1,1 +1,1 @@
-# IT490-Projcet
+# IT490-Project
