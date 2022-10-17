@@ -1,0 +1,8 @@
+ServerAdmin admin@example.com
+ServerName example.com
+ServerAlias www.example.com
+DocumentRoot /var/www/html/test
+ErrorLog ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+##Server called TEST is created, and can be accessed through apache2
