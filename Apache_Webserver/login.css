@@ -1,0 +1,97 @@
+html{
+    background-color: black;
+
+}
+
+.parentClass {
+    position: relative;
+    background: #e00c3ea3;
+    width: 80vw;
+    margin: 8vw 10vw;
+    height: 200px;
+}
+
+
+#circle {
+    width: 40em;
+    height: 40em;
+    -webkit-border-radius: 40em;
+    -moz-border-radius: 40em;
+    border-radius: 40em;
+    background: rgb(166, 15, 51,0.5);
+    vertical-align: middle;
+    text-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    grid-area: overlap;
+
+  }
+  #circle2 {
+    width: 30em;
+    height: 30em;
+    -webkit-border-radius: 30em;
+    -moz-border-radius: 30em;
+    border-radius: 30em;
+    background: rgb(166, 15, 51,0.7);
+    vertical-align: middle;
+    text-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    grid-area: overlap;
+    align-self: center;
+    justify-self: center;
+
+  }
+
+  .container{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "overlap";
+  }
+
+
+
+
+  input[type=text], input[type=password] {
+    width:100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    color:white;
+    vertical-align: middle;
+    text-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  button {
+    background-color: #f9459f;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    vertical-align: middle;
+    text-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  button:hover {
+    opacity: 0.8;
+  }
+
+  .container-box{
+    color:white;
+    vertical-align: middle;
+    text-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
