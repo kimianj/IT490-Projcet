@@ -1,2 +1,3 @@
 # IT490-Project
-<img href = "https://github.com/kimianj/IT490-Projcet/blob/main/Login.png">
+
+<img src='https://github.com/kimianj/IT490-Projcet/blob/main/Login.png' width='' alt='Video Walkthrough' />
