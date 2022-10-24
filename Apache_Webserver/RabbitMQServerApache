@@ -29,8 +29,61 @@ function requestProcessor($request)
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
-function "doValidate"(){
+
+function sendLoginConfirmation(){
+	$client = new rabbitMQClient("testRabbitMQ.ini", "speak");
+	$msg = "test message";
+	$request = array();
+	$request['type'] = "valiate_session";
+	$request['message'] = $msg;
+	$response = $client->send_request($request);
+	
+	echo "Client got the responce: ".PHP_EOL;
+	print_r($response);
+}
+
+function sendLoginDeclination($reason){
+	$client = new rabbitMQClient("testRabbitMQ.ini", "speak");
+	$msg = "test message";
+	$request = array();
+	$request['type'] = "invaliate_session";
+	$request['message'] = $reason;
+	$response = $client->send_request($request);
+	
+	echo "Client got the responce: ".PHP_EOL;
+	print_r($response);
+}
+function doValidate(){
 	return "test successful";
+}
+
+function sessionId(){
+
+	$newID = session_create_id('myprefix- ');
+	session_start();
+ 
+	session_unset();   
+	session_destroy();  
+	}
+	//timestamp
+	$_SESSION['LAST_ACTIVITY'] = time(); 
+
+	   session_start();
+	   
+	   if(session_destroy()) {
+	      header("Location: login.php");
+	   }
+	   
+	   session_id($newID);
+	   $SetID = session_id();
+	   
+	$server = new rabbitMQServer("testRabbitMQ.ini","speak");
+	$request = array();
+	$request['type'] = "create_session";
+	$request['message'] = $SetID;
+	$response = $client->send_request($request);
+	 
+	   
 }
 
 $server = new rabbitMQServer("testRabbitMQ.ini","receiving");
