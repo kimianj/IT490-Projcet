@@ -69,7 +69,7 @@ function requestProcessor($request)
 }
 
 function sendLoginConfirmation(){
-    $client = new rabbitMQClient("testRabbitMQ.ini", "speak");
+    $client = new rabbitMQClient("testRabbitMQ.ini", "Q");
     $msg = "test message";
 
     $request = array();
@@ -83,7 +83,7 @@ function sendLoginConfirmation(){
     echo "\n\n";
 }
 function sendLoginDeclination($reason){
-    $client = new rabbitMQClient("testRabbitMQ.ini", "speak");
+    $client = new rabbitMQClient("testRabbitMQ.ini", "Q");
     $msg = "test message";
 
     $request = array();
@@ -97,7 +97,7 @@ function sendLoginDeclination($reason){
     echo "\n\n";
 }
 
-$server = new rabbitMQServer("testRabbitMQ.ini","listen");
+$server = new rabbitMQServer("testRabbitMQ.ini","Q");
 
 $server->process_requests('requestProcessor');
 exit();
