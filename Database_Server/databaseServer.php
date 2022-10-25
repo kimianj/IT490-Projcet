@@ -12,17 +12,31 @@ function doLogin($username,$password)
     if($mydb->errno != 0)
 	{
 		echo "failed to connect to database: ". $mydb->error . PHP_EOL;
-		return false;
+		return "Connection failure";
 	}
     $query = "SELECT userid, username from users where username='$username' and password='$password'";
     $result = $mydb->query($query);
     if($result->num_rows > 0){
-    	return true;
+    	return "Success";
     }
     else{
-    	return false;
+    	return "Login failure";
     }
     //return false if not valid
+}
+function makeSession($sessID){
+	$sdb = new mysqli('localhost', 'testUser','12345','db490');
+	if($sdb->errno != 0)
+	{
+		echo "failed to connect to database: ". $mydb->error . PHP_EOL;
+		return false;
+	}
+	$q1 = "insert into sessions (sessionid) values ('$sessID')";
+	$result = $sdb->query($q1);
+	if($result)
+		return true;
+	else
+		return false;
 }
 
 function requestProcessor($request)
@@ -37,15 +51,19 @@ function requestProcessor($request)
   {
     case "Login":
     	$foundUser = doLogin($request['username'],$request['password']);
-    	if($foundUser){
+    	if($foundUser == "Success"){
     		sendLoginConfirmation();
+    		return true;
     	}
-    	else{
-    		sendLoginDeclination();
+    	else if ($foundUser == "Connection Failure"){
+    		sendLoginDeclination("Failed to connect to login database.");
     	}
-      	return $foundUser;
-    case "validate_session":
-      return doValidate($request['sessionId']);
+    	else if ($foundUser == "Login Failure"){
+    		sendLoginDeclination("Incorrect login credentials.");
+    	}
+      	return false;
+    case "create_session":
+      return makeSession($request['SessionID']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
@@ -64,13 +82,13 @@ function sendLoginConfirmation(){
     print_r($response);
     echo "\n\n";
 }
-function sendLoginDeclination(){
+function sendLoginDeclination($reason){
     $client = new rabbitMQClient("testRabbitMQ.ini", "speak");
     $msg = "test message";
 
     $request = array();
     $request['type'] = "invalid_session";
-    $request['message'] = $msg;
+    $request['message'] = $reason;
     $response = $client->send_request($request);
     //$response = $client->publish($request);
 
