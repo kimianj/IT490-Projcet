@@ -54,7 +54,7 @@ function sendLoginDeclination($reason){
 	print_r($response);
 }
 function doValidate(){
-	return "test successful";
+	return sessionId();
 }
 
 function sessionId(){

@@ -1,4 +1,4 @@
-[testServer]
+[speak]
 BROKER_HOST = 172.24.200.38
 BROKER_PORT = 5672
 USER = Apache
@@ -9,13 +9,3 @@ QUEUE = DB Queue
 ;EXCHANGE_TYPE = direct
 AUTO_DELETE = true
 
-[receiving]
-BROKER_HOST = 172.24.200.38
-BROKER_PORT = 5672
-USER = Apache
-PASSWORD = can1234
-VHOST = V-HOST
-EXCHANGE = exchange
-QUEUE = AP Queue
-;EXCHANGE_TYPE = direct
-AUTO_DELETE = true
