@@ -28,6 +28,30 @@ function doLogin($username,$password)
     }
     //return false if not valid
 }
+function makeNewSession(){
+	$sdb = new mysqli('localhost', 'testUser','12345','db490');
+	if($sdb->errno != 0)
+	{
+		echo "failed to connect to database: ". $mydb->error . PHP_EOL;
+		return false;
+	}
+	$newID = false;
+	$ID = 0;
+	while(!$newID){
+		$ID = rand(1,getrandmax());
+		$q1 = "SELECT sessionid from sessions where sessionid='$ID'";
+		$result = $sdb->query($q1);
+    	if($result->num_rows == 0){
+    		$newID = true;
+    	}
+	}
+	$q2 = "insert into sessions (sessionid) values ('$ID')";
+	$result = $sdb->query($q1);
+	if($result)
+		return $ID;
+	else
+		return 0;
+}
 
 function requestProcessor($request)
 {
@@ -43,13 +67,17 @@ function requestProcessor($request)
     	echo "Searching for user...".PHP_EOL;
       $success = doLogin($request['username'],$request['password']);
       if ($success == true){
-      		return array("returnCode" => '1', 'message'=>"Correct credentials.");
+      		$ID = makeNewSession();
+      		if($ID == 0){
+      			return array("returnCode" => '3', 'message'=>"Something went wrong with inserting the Session ID.");
+      		}
+      		return array("returnCode" => '1', 'message'=>"Correct credentials.", "sessionId" => $ID);
       }
       if ($success == false){
       		return array("returnCode" => '2', 'message'=>"Incorrect credentials.");
       }
     case "validate_session":
-      return doValidate($request['sessionId']);
+      return validateSession($request['sessionId']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
