@@ -38,9 +38,7 @@ switch($returnCode){
         	</script>";
 		
 		break;
-	default:
-		echo "something went wrong";
-		
+	
 	case 2:
 		$usernmae = $response["username"];
 		$password = $response["password"];
@@ -52,7 +50,8 @@ switch($returnCode){
 		</script>";
 			break;
 	default:
-		echo"wrong ones";
+		echo "something went wrong";
+
 }
 echo "\n\n";
 
