@@ -4,6 +4,15 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
+$username = $_POST['username'];
+$password = $_POST['password'];
+if (empty($username)){
+	echo"field is empty/data not carried over";
+	else{
+	echo $username;
+	}
+}
+
 $client = new rabbitMQClient("testRabbitMQ.ini","speak");
 if (isset($argv[1]))
 {
@@ -16,8 +25,8 @@ else
 
 $request = array();
 $request['type'] = "Login"; //change hard coded variables to text box inputs (username/password)
-$request['username'] = "dummy490";
-$request['password'] = "12345678";
+$request['username'] = $username;
+$request['password'] = $password;
 $request['message'] = $msg;
 $response = $client->send_request($request);
 //$response = $client->publish($request);
@@ -36,8 +45,15 @@ switch($returnCode){
         	</script>";
 		
 		break;
+	
+	case 2:
+		echo "Incorrect Username or Password"
+			header("Location: 127.24.227.167/");
+			exit();
+		break;
 	default:
-		echo "something went wrong";
+		echo "Something went wrong";
+
 }
 echo "\n\n";
 
