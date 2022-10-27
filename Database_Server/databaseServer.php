@@ -45,8 +45,8 @@ function makeNewSession(){
     		$newID = true;
     	}
 	}
-	$q2 = "insert into sessions (sessionid) values ('$ID')";
-	$result = $sdb->query($q1);
+	$q2 = "INSERT INTO sessions (sessionid) VALUES ('$ID')";
+	$result = $sdb->query($q2);
 	if($result)
 		return $ID;
 	else
