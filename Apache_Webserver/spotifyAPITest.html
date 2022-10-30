@@ -158,14 +158,118 @@
 
     <script>
 
-        var redirect_URL = "https://172.24.227.164/index.html"
-        var client_id = "f20fc10f94d3487b9afd68fe38517d92"
-        var client_secrete = "e30887754b724c5a81b57ab851ec144a"
-        const AUTHORIZE = "https://account.spotify.com/authorize"
+        var redirect_URL = "https://172.24.227.164/index.html";
+        var client_id = "f20fc10f94d3487b9afd68fe38517d92";
+        var client_secrete = "e30887754b724c5a81b57ab851ec144a";
+        const AUTHORIZE = "https://account.spotify.com/authorize";
+        const TOKEN = "https://account.spotify.com/api/token";
 
         function onPageLoad(){
+            localStorage.setItem("clientID", client_id);
+            localStorage.setItem("clientSecrete", client_secrete);
+            if(window.localStorage.search.length >0){
+                handleRedirect();
+            }
 
         }
+
+        function handleRedirect(){
+            let code = getCode();
+            fetchAccessToken(code);
+            window.history.pushState("", "", redirect_URL);
+
+        }
+
+        function fetchAccessToken(){
+            let body = "grant_type =athrorization_code";
+            body += "&code=" + code;
+            body +="&redirect_uri=" +encodeURI(redirect_URL);
+            body +="&client_id=" +client_id;
+            body +="&client_secrete=" +client_secrete;
+            callAuthorizeationApi(body);
+        }
+        
+        function callAuthorizeationApi(body){
+            let XMLReq = new XMLHttpRequest();
+            XMLReq.open("POST", TOKEN, true);
+            XMLReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            XMLReq.setRequestHeader('Authorization', 'Basics ', btoa(client_id +":", client_secrete));
+            XMLReq.send(body);
+            XMLReq.onload= handleAuthorizationResponse;
+        }
+        
+        function refreshAccessToken(){
+            refresh_token = localStorage.getItem("refresh_token");
+            let body = "grant_type=refresh_token";
+            body += "&refresh_token=" + refresh_token;
+            body += "&client_id=" + client_id;
+            callAuthorizationApi(body);
+        }
+
+
+        function handleAuthorizationResponse(){
+            if ( this.status == 200 ){
+                var data = JSON.parse(this.responseText);
+                console.log(data);
+                var data = JSON.parse(this.responseText);
+                if ( data.access_token != undefined ){
+                    access_token = data.access_token;
+                    localStorage.setItem("access_token", access_token);
+                }
+                if ( data.refresh_token  != undefined ){
+                    refresh_token = data.refresh_token;
+                    localStorage.setItem("refresh_token", refresh_token);
+                }
+                onPageLoad();
+            }
+            else {
+            console.log(this.responseText);
+            alert(this.responseText);
+            }
+        }
+
+        function refreshPlaylists(){
+            callApi( "GET", PLAYLISTS, null, handlePlaylistsResponse );
+        }
+
+        function callApi(method, url, body, callback){
+            let XMLReq = new XMLHttpRequest();
+            XMLReq.open(method, url, true);
+            XMLReq.setRequestHeader('Content-Type', 'application/json');
+            XMLReq.setRequestHeader('Authorization', 'Bearer ' + access_token);
+            XMLReq.send(body);
+            XMLReq.onload = callback;
+        }
+
+        function handlePlaylistsResponse(){
+            if ( this.status == 200 ){
+                var data = JSON.parse(this.responseText);
+                console.log(data);
+                removeAllItems( "playlists" );
+                data.items.forEach(item => addPlaylist(item));
+                document.getElementById('playlists').value=currentPlaylist;
+            }
+            else if ( this.status == 401 ){
+                refreshAccessToken()
+            }
+            else {
+                console.log(this.responseText);
+                alert(this.responseText);
+            }
+        }
+
+
+        function getCode(){
+            let code = null;
+            const queryString = window.location.search;
+            if(queryString.length >0){
+                consturlParams = new URLSearchParams(queryString);
+                code = URLSearchParams.get('code');
+            }
+            return code;
+        }
+
+
 
         function AuthorizationRequest(){
             client_id = document.getElementById("clientId").value;
@@ -181,7 +285,5 @@
             url += "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
             window.location.href = url;
         }
-
-
     </script>
 </html>
