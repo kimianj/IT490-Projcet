@@ -1,6 +1,6 @@
 <?php
 
-require_once('get_database.inc');
+require_once('getDatabase.inc');
 
 function createNewUser($username, $email, $password){
 	$password = password_hash($password, PASSWORD_BCRYPT);
