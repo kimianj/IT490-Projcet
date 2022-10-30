@@ -1,5 +1,9 @@
 #!/usr/bin/php
 <?php
+/* DO NOT USE THIS FILE! USE databaseServer.php instead  
+
+
+
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
@@ -101,5 +105,6 @@ $server = new rabbitMQServer("testRabbitMQ.ini","Q");
 
 $server->process_requests('requestProcessor');
 exit();
+*/
 ?>
 

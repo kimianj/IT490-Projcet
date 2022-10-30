@@ -1,2 +1,8 @@
 # this will be where any possilbe requirements needed will be stored
 # possiblity need pytest for testing
+
+
+#https://pypi.org/project/tekore/
+#Spotify API for Python is here
+#https://tekore.readthedocs.io/en/stable/
+#Documentation for API
