@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <style>
     html{
@@ -43,7 +43,7 @@
     border: none;
     display: block;
     padding: 0.9rem 0.9rem;
-    box-shadow: 0px 3px 6px rgba(248, 248, 248, 0.468);
+    box-shadow: 0 3px 6px rgba(248, 248, 248, 0.468);
     font-size: 17px;
     color: #4A4A4A;
     text-indent: 40px;
@@ -59,25 +59,24 @@
     background-color: #0b6fa9;
     color: #fff;
     border-radius: 4px;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     font-size: 17px;
     }
 
     form .spotify_btn{
-        border: 5px solid;
         cursor: pointer;
         display: inline-block;
         margin: 0 auto;
         padding: 0.9rem 2.5rem;
         text-align: center;
-        border-color: #1DB954;
+        border: 5px solid #1DB954;
         background-color: #010101;
         color: #fff;
         border-radius: 4px;
-        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
         font-size: 17px;
         position:relative;
-        transform: translateY(-50);
+        transform: translateY(-50px);
     }
     form .spotify_btn img{
         float: left;
@@ -102,6 +101,7 @@
 
     <head>
         <meta charset="UTF-8">
+        <title>Spotiy</title>
     </head>
 
     <body onload="onPageLoad()">
@@ -123,7 +123,7 @@
 
                 <div id="bg"></div>
 
-                  <form action= "/testRabbitMQClient.php" class="login" method="post">
+                  <form action= "/rabbitMQLoginClient.php" class="login" method="post">
                 <div class="form-field">
                     <input for = "clientId" type="username" placeholder="Username" name="username" required/>
                 </div>
@@ -136,7 +136,7 @@
                     <button class="btn" type="submit">Log in</button>
                 </div>
                 <div class="form-field">
-                    <button class="spotify_btn" type="submit" onclick="AuthorizationRequest()"><img src= "Spotify.png" width="40px" height="40px">Login with Spotify</button>
+                    <button class="spotify_btn" type="submit" onclick="AuthorizationRequest()"><img src= "Spotify.png" width="40px" height="40px" alt="Spotify">Login with Spotify</button>
                 </div>
                 
                 </form>
