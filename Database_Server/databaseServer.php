@@ -53,7 +53,7 @@ function doLogin($username,$password)
     }
     //return false if not valid
 }*/
-function makeNewSession(){
+function makeNewSession($uid){
 	$sdb = getDB();
 	if($sdb->errno != 0)
 	{
@@ -70,7 +70,7 @@ function makeNewSession(){
     		$newID = true;
     	}
 	}
-	$q2 = "INSERT INTO sessions (sessionid) VALUES ('$ID')";
+	$q2 = "INSERT INTO sessions (sessionid, userid) VALUES ('$ID', '$uid')";
 	$result = $sdb->query($q2);
 	if($result)
 		return $ID;
@@ -90,19 +90,30 @@ function requestProcessor($request)
   {
     case "Login":
     	echo "Searching for user...".PHP_EOL;
-      $success = doLogin($request['username'],$request['password']);
-      if ($success == true){
-      		$ID = makeNewSession();
+      $u = doLogin($request['username'],$request['password']);
+      if ($u != 0){
+      		$ID = makeNewSession($u);
       		if($ID == 0){
       			return array("returnCode" => '3', 'message'=>"Something went wrong with inserting the Session ID.");
       		}
       		return array("returnCode" => '1', 'message'=>"Correct credentials.", "sessionId" => $ID);
       }
-      if ($success == false){
+      if ($u == 0){
       		return array("returnCode" => '2', 'message'=>"Incorrect credentials.");
       }
     case "validate_session":
       return validateSession($request['sessionId']);
+    case "Spotify login":
+    	$email = $request['email'];
+    	$token = $request['token'];
+    	$u = updateUser_Spotify($email, $token);
+    	if ($u != 0){
+      		$ID = makeNewSession($u);
+      		if($ID == 0){
+      			return array("returnCode" => '3', 'message'=>"Something went wrong with inserting the Session ID.");
+      		}
+      		return array("returnCode" => '1', 'message'=>"Correct credentials.", "sessionId" => $ID);
+      }
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
