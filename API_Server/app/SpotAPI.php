@@ -11,9 +11,9 @@ class Spotify {
     $reURL = '172.24.227.167/homepage'
 
         $data = array (
-            'client_id' => $client_id
-            'reURL' => $reURL
-            'scope' => $scope
+            'client_id' => $client_id,
+            'reURL' => $reURL,
+            'scope' => $scope,
             'resTyp' => $resTyp
         );
 
