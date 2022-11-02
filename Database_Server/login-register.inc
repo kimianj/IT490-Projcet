@@ -65,12 +65,13 @@ function doLogin($username,$password)
 		echo "failed to connect to database: ". $mydb->error . PHP_EOL;
 		return 0;
 	}
-    $query = "SELECT userid, username, password from users where (username='$username' or email='$username')";
+    $query = "SELECT userid, password from users where (username='$username' or email='$username')";
     $result = $mydb->query($query);
     if($result->num_rows > 0){
-    	if(password_verify($password, $result->fetch_row()[2])){
-    		echo "Found user ".$result->fetch_row()[0].".".PHP_EOL;
-    		return $result->fetch_row()[0];
+    	$res = $result->fetch_row();
+    	if(password_verify($password, $res[1])){
+    		echo "Found user ".$res[0].".".PHP_EOL;
+    		return $res[0];
     	}
     	else{
     		echo "Incorrect password.".PHP_EOL;

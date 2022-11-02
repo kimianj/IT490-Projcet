@@ -109,6 +109,9 @@ function requestProcessor($request)
       		if($ID == 0){
       			return array("returnCode" => '3', 'message'=>"Something went wrong with inserting the Session ID.");
       		}
+      		echo "Successful login".PHP_EOL;
+      		$a = array("returnCode" => '1', 'message'=>"Correct credentials.", "sessionId" => $ID);
+      		var_dump($a);
       		return array("returnCode" => '1', 'message'=>"Correct credentials.", "sessionId" => $ID);
       }
       if ($u == 0){
@@ -125,7 +128,7 @@ function requestProcessor($request)
       	}
       	return array("returnCode" => '3', 'message'=>"Something went wrong.");
   }
-  return array("returnCode" => '0', 'message'=>"Server received request and processed");
+  //return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
 $server = new rabbitMQServer("testRabbitMQ.ini","Q");
