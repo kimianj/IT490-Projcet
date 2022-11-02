@@ -1,19 +1,20 @@
-#!/usr/bin/php
-
 <?php
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
+
 $client = new rabbitMQClient("testRabbitMQ.ini","speak");
-if (isset($argv[1]))
-{
-  $msg = $argv[1];
-}
-else
-{
-  $msg = "test message";
-}
+
+
+//if (isset($argv[1]))
+//{
+ // $msg = $argv[1];
+//}
+//else
+//{
+ // $msg = "test message";
+//}
 
 $username = $_POST['username'];
 $password= $_POST['password'];
@@ -24,10 +25,14 @@ $request['type'] = "Login"; //change hard coded variables to text box inputs (us
 $request['username'] = $username;
 $request['password'] = $password;
 $request['message'] = $msg;
+
 $response = $client->send_request($request);
+
+
+
 //$response = $client->publish($request);
 
-echo "client received response: ".PHP_EOL;
+//echo "client received response: ".PHP_EOL;
 print_r($response);
 //see if you can grab the responce array
 $returnCode = $response["returnCode"];
@@ -40,6 +45,8 @@ switch($returnCode){
 		sessionStorage.setItem('id',", $sessionId, ");
         	let info = sessionStorage.getItem(id);
         	</script>";
+        	//header("Location: /homepage.html");
+			//exit();
 
 		break;
 	case 2:
@@ -50,6 +57,8 @@ switch($returnCode){
 	default:
 		echo "Something went wrong";
 }
+
+
 echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;
