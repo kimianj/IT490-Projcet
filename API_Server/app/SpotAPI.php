@@ -7,7 +7,7 @@ require_once('rabbitMQLib.inc');
 
 class Spotify {
 
-    function Auth {
+    function Auth () {
         $data = array (
             'client_id' => $client_id
             'reURL' => $reURL
