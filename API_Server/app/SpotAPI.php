@@ -8,6 +8,8 @@ require_once('rabbitMQLib.inc');
 class Spotify {
 
     function Auth () {
+    $reURL = '172.24.227.167/homepage'
+
         $data = array (
             'client_id' => $client_id
             'reURL' => $reURL
@@ -20,7 +22,6 @@ class Spotify {
 
  /*   function getUserPlaylist ($client) {
     $urlUP = 'https://api.spotify.com/v1/users/'.client_id'/playlists'
-    $reURL = '172.24.227.167/homepage'
     $scope = 'user-read-private user-read-email'
     $resTyp = 'code'
 
