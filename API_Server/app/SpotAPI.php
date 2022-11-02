@@ -18,7 +18,7 @@ class Spotify {
         );
 
         $authLink = 'https://accounts.spotify.com/authorize?' . http_build_query( $data );
-        return $authLink
+        return $authLink;
     }
 
  /*   function getUserPlaylist ($client) {
