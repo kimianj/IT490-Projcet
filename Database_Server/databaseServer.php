@@ -58,7 +58,7 @@ function makeNewSession($uid){
 	if($sdb->errno != 0)
 	{
 		echo "failed to connect to database: ". $mydb->error . PHP_EOL;
-		return false;
+		return 0;
 	}
 	$newID = false;
 	$ID = 0;
@@ -76,6 +76,19 @@ function makeNewSession($uid){
 		return $ID;
 	else
 		return 0;
+}
+function makeNewSession_Spotify($email){
+	$db = getDB();
+	if($db->errno != 0)
+	{
+		echo "failed to connect to database: ". $mydb->error . PHP_EOL;
+		return 0;
+	}
+	$q1 = "SELECT userid from users where (email='$email')";
+	$result = $db->query($q1);
+	if($result->num_rows > 0){
+		return makeNewSession($result->fetch_row()[0]);
+	}
 }
 
 function requestProcessor($request)
@@ -108,12 +121,9 @@ function requestProcessor($request)
     	$token = $request['token'];
     	$u = updateUser_Spotify($email, $token);
     	if ($u != 0){
-      		$ID = makeNewSession($u);
-      		if($ID == 0){
-      			return array("returnCode" => '3', 'message'=>"Something went wrong with inserting the Session ID.");
-      		}
-      		return array("returnCode" => '1', 'message'=>"Correct credentials.", "sessionId" => $ID);
-      }
+      		return array("returnCode" => '200', 'message'=>"All good!", "email" => $email);
+      	}
+      	return array("returnCode" => '3', 'message'=>"Something went wrong.");
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }

@@ -8,7 +8,7 @@ require_once('getDatabase.inc');
 function createNewUser($username, $email, $password){
 	$password = password_hash($password, PASSWORD_BCRYPT);
 	$db = getDB();
-	if($mydb->errno != 0)
+	if($db->errno != 0)
 	{
 		echo "failed to connect to database: ". $mydb->error . PHP_EOL;
 		return false;
@@ -30,7 +30,7 @@ function createNewUser($username, $email, $password){
 
 function updateUser_Spotify($email, $token){
 	$db = getDB();
-	if($mydb->errno != 0)
+	if($db->errno != 0)
 	{
 		echo "failed to connect to database: ". $mydb->error . PHP_EOL;
 		return 0;
