@@ -1,7 +1,7 @@
 <?php
 require_once('secret.php');
-require_once('Database_Server/get_host_info');
-require_once('Database_Server/path.inc');
+require_once('getHostInfo.inc');
+require_once('path.inc');
 require_once('rabbitMQLib.inc');
 
 class Spotify {
