@@ -1,7 +1,7 @@
 <?php
 require_once('secret.php');
-require_once('path.inc');
-require_once('get_host_info.inc');
+require_once('Database_Server/get_host_info');
+require_once('Database_Server/path.inc');
 require_once('rabbitMQLib.inc');
 
 class Spotify {
@@ -50,7 +50,7 @@ function requestProcessor($request) {
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
-$server = new rabbitMQServer("testRabbitMQ.ini","testServer");
+$server = new rabbitMQServer("testRabbitMQ.ini","D");
 
 echo "testRabbitMQServer BEGIN".PHP_EOL;
 $server->process_requests('requestProcessor');
