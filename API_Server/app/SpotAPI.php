@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 require_once('secret.php');
 require_once('getHostInfo.inc');
