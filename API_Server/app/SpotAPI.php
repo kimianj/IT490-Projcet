@@ -48,7 +48,7 @@ function requestProcessor($request) {
   switch ($request['type'])
   {
     case "authLink":
-      return Auth;
+      return Auth ();
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
