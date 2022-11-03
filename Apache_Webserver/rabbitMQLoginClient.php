@@ -6,16 +6,6 @@ require_once('rabbitMQLib.inc');
 
 $client = new rabbitMQClient("testRabbitMQ.ini","speak");
 
-
-//if (isset($argv[1]))
-//{
- // $msg = $argv[1];
-//}
-//else
-//{
- // $msg = "test message";
-//}
-
 $username = $_POST['username'];
 $password= $_POST['password'];
 
@@ -45,8 +35,8 @@ switch($returnCode){
 		sessionStorage.setItem('id',", $sessionId, ");
         	let info = sessionStorage.getItem(id);
         	</script>";
-        	//header("Location: /homepage.html");
-			//exit();
+        	header("Location: /homepage.html");
+			exit();
 
 		break;
 	case 2:
