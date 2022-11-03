@@ -9,6 +9,8 @@ require_once('rabbitMQLib.inc');
     $reURL = '172.24.227.167/homepage';
     $scope = 'user-read-private user-read-email';
     $resTyp = 'code';
+    $client_id = '';
+    $client_secret = '';
 
         $data = array (
             'client_id' => $client_id,
@@ -21,7 +23,7 @@ require_once('rabbitMQLib.inc');
         return $authLink;
     }
     function getAuthCode() {
-        <?php if(isset($_GET['code']) && isset($_SESSION['spotAcc'] ) ) {
+         if(isset($_GET['code']) && isset($_SESSION['spotAcc'] ) ) {
             $data = array(
                 'reURL' => $reURL,
                 'gType' => 'authCode',
@@ -40,19 +42,19 @@ require_once('rabbitMQLib.inc');
             return $response;
 
             if ( isset( $response->accToken ) ) {
-                header('Location: '. $response -> accToken)
+                header('Location: '. $response -> accToken);
             }
         }
     }
 
     function getUserData() {
-        <?php if ( isset( $_GET['access'] ) ) {
+        if ( isset( $_GET['access'] ) ) {
             $curl = curl_init();
             curl_setopt( $ch, CURLOPT_URL, 'https://api.spotify.com/v1/me' );
             curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type:application/json', 'Authorization: Bearer ' . $_GET['access'] ) );
             curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 
-            $profile = curl_exec($curl)
+            $profile = curl_exec($curl);
             curl_close($curl);
 
             echo '<pre>';
