@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
 require_once('path.inc');
 require_once('get_host_info.inc');
@@ -44,10 +43,6 @@ try {
 } catch(OAuthException $E) {
     echo "Exception caught!\n";
     echo "Response: ". $E->lastResponse . "\n";
-}
-
-
-
-	
+}	
 
 ?>
