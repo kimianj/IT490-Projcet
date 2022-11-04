@@ -6,21 +6,20 @@ require_once('path.inc');
 require_once('rabbitMQLib.inc');
 
     function Auth() {
-    $reURL = '172.24.227.167/homepage';
+    $reURL = 'https://172.24.227.167/homePage.html';
     $scope = 'user-read-private user-read-email';
     $resTyp = 'code';
-    $client_id = '';
-    $client_secret = '';
 
         $data = array (
-            'client_id' => $client_id,
-            'reURL' => $reURL,
+            'client_id' => getClientID(),
+            'redirect_uri' => $reURL,
             'scope' => $scope,
-            'resTyp' => $resTyp
+            'response_type' => $resTyp
         );
 
         $authLink = 'https://accounts.spotify.com/authorize?' . http_build_query( $data );
-        return $authLink;
+        echo $authLink;
+        return array("authLink" => $authLink);
     }
     function getAuthCode() {
          if(isset($_GET['code']) && isset($_SESSION['spotAcc'] ) ) {
@@ -39,7 +38,7 @@ require_once('rabbitMQLib.inc');
 
             $response = curl_exec($curl);
             curl_close( $curl );
-            return $response;
+            return array("response" => $response);
 
             if ( isset( $response->accToken ) ) {
                 header('Location: '. $response -> accToken);
