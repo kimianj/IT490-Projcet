@@ -60,7 +60,7 @@ require_once('rabbitMQLib.inc');
             var_dump( $profile );
             echo '</pre>';
 
-            //figure out what needs to be returned
+            return array("profile" => $profile);
         }
     }
 
@@ -79,7 +79,7 @@ require_once('rabbitMQLib.inc');
             var_dump( $playlists );
             echo '</pre>';
 
-            //figure out what needs to be returned
+            return array("playlists" => $playlists)
         }
    }
 
@@ -98,6 +98,11 @@ function requestProcessor($request) {
     case "authCode":
         return getAuthCode();
         break;
+    case "userData":
+        return getUserData();
+        break;
+    case "userPlaylists":
+        return getUserPlaylist();
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
