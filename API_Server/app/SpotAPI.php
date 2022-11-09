@@ -21,14 +21,7 @@ require_once('rabbitMQLib.inc');
         echo $authLink;
         return array("authLink" => $authLink);
     }
-    function getAuthCode() {
-         if(isset($_GET['code']) && isset($_SESSION['spotAcc'] ) ) {
-            $data = array(
-                'reURL' => $reURL,
-                'gType' => 'authCode',
-                'code' => $_GET['code'],
-            );
-
+    function getAccTok() {
             $curl = curl_init();
             curl_setopt( $curl, CURLOPT_URL, 'https://accounts.spotify.com/api/token' );
             curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
@@ -43,45 +36,35 @@ require_once('rabbitMQLib.inc');
             if ( isset( $response->accToken ) ) {
                 header('Location: '. $response -> accToken);
             }
-        }
     }
 
-    function getUserData() {
-        if ( isset( $_GET['access'] ) ) {
-            $curl = curl_init();
-            curl_setopt( $ch, CURLOPT_URL, 'https://api.spotify.com/v1/me' );
-            curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type:application/json', 'Authorization: Bearer ' . $_GET['access'] ) );
-            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+    function search() {
+        $request["artist"] = $artist;
+        $request["title"] = $title;
 
-            $profile = curl_exec($curl);
-            curl_close($curl);
+        $curl = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.spotify.com/v1/search?q='.urlencode($artist.' '.$title).'&type=track');
+        curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type:application/json', 'Authorization: Bearer ' . $_GET['access'] ) );
 
-            echo '<pre>';
-            var_dump( $profile );
-            echo '</pre>';
-
-            return array("profile" => $profile);
-        }
+         $response = curl_exec($curl);
+         curl_close( $curl );
+         return array("response" => $response);
     }
 
-   function getUserPlaylist ($client) {
-        if ($profile -> id) {
-            $curl = curl_init();
-            curl_setopt( $curl, CURLOPT_URL, 'https://api.spotify.com/v1/users/' . $profile -> id . '/playlists');
-            curl_setopt( $curl, CURLOPT_HTTPGET, 1 );
-            curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
-            curl_setopt( $curl, CURLOPT_HTTPHEADER, array( 'Authorization: Bearer ' . $_GET['access'] ) );
+    function getRecomendation() {
+        $request["genre"] = $genre;
+        $curl = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.spotify.com/v1/recommendations?'.urlencode($genre));
+        curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type:application/json', 'Authorization: Bearer ' . $_GET['access'] ) );
 
-            $playlists = curl_exec($curl);
-            curl_close($curl);
-
-            echo '<pre>';
-            var_dump( $playlists );
-            echo '</pre>';
-
-            return array("playlists" => $playlists)
-        }
-   }
+        $response = curl_exec($curl);
+        curl_close( $curl );
+        return array("response" => $response);
+    }
 
 function requestProcessor($request) {
   echo "received request".PHP_EOL;
@@ -92,17 +75,14 @@ function requestProcessor($request) {
   }
   switch ($request['type'])
   {
-    case "authLink":
-      return Auth();
-      break;
-    case "authCode":
-        return getAuthCode();
+    case "AccTok":
+        return getAccTok();
         break;
-    case "userData":
-        return getUserData();
+    case "search":
+        return search();
         break;
-    case "userPlaylists":
-        return getUserPlaylist();
+    case "recommendations":
+        return getRecomendation();
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
