@@ -6,7 +6,7 @@ require_once('path.inc');
 require_once('rabbitMQLib.inc');
 
     function Auth() {
-    $reURL = 'https://172.24.147.251/homePage.html';
+    $reURL = 'http://172.24.147.251/homePage.html';
     $scope = 'user-read-private user-read-email';
     $resTyp = 'code';
 
