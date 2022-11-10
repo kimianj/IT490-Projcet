@@ -5,54 +5,9 @@ require_once('getHostInfo.inc');
 require_once('rabbitMQLib.inc');
 require_once('getDatabase.inc');
 require_once('login-register.inc');
-/*
-function getDB(){
-	$dbc;
-	$dbc = parse_ini_file("dbLogin.ini",$process_sections=true);
-	$db = new mysqli('localhost', $dbc["login"]["USER"],$dbc["login"]["PASSWORD"],$dbc["login"]["DATABASE"]);
-	return $db;
-}
-function createNewUser($username, $email, $password){
-	$password = password_hash($password, PASSWORD_BCRYPT);
-	$db = getDB();
-	$q1 = "SELECT userid from users where (username='$username' or email='$username')";
-	$result = $db->query($q1);
-    if($result->num_rows > 0){
-    	echo "User already exists.".PHP_EOL;
-    	return false;
-    }
-    $q2 = "INSERT INTO users (username, email, password) VALUES ('$username','$email','$password')";
-	$result = $db->query($q2);
-	if($result){
-		echo "Created new user.".PHP_EOL;
-		return true;
-	}
-	return false;
-}
+require_once('spotifyFunctions.inc');
 
-function doLogin($username,$password)
-{
-    // lookup username in database
-    // check password
-    $mydb = getDB();
-    $query = "SELECT userid, username, password from users where (username='$username' or email='$username')";
-    $result = $mydb->query($query);
-    if($result->num_rows > 0){
-    	if(password_verify($password, $result->fetch_row()[2])){
-    		echo "Found user.".PHP_EOL;
-    		return true;
-    	}
-    	else{
-    		echo "Incorrect password.".PHP_EOL;
-    		return false;
-    	}
-    }
-    else{
-    	echo "Incorrect username/email.".PHP_EOL;
-    	return false;
-    }
-    //return false if not valid
-}*/
+
 function makeNewSession($uid){
 	$sdb = getDB();
 	if($sdb->errno != 0)
@@ -119,6 +74,7 @@ function requestProcessor($request)
       }
     case "validate_session":
       return validateSession($request['sessionId']);
+    /*
     case "Spotify login":
     	$email = $request['email'];
     	$token = $request['token'];
@@ -127,8 +83,21 @@ function requestProcessor($request)
       		return array("returnCode" => '200', 'message'=>"All good!", "email" => $email);
       	}
       	return array("returnCode" => '3', 'message'=>"Something went wrong.");
+	*/
+	case "playlist_add_song":
+		$r = addToPlaylist($request['sessionId'], $request['songId']);
+		if($r){
+			return array("returnCode" => '1', 'message'=>"Song added to Playlist.");
+		}
+		return array("returnCode" => '2', 'message'=>"Uh oh, something went wrong.");
+	case "playlist_retrieve":
+		$s = retrievePlaylist($request['sessionId']);
+		if($s){
+			return array("returnCode" => '1', 'songs' => $s);
+		}
+		return array("returnCode" => '2', 'message'=>"Uh oh, something went wrong.");
   }
-  //return array("returnCode" => '0', 'message'=>"Server received request and processed");
+  return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
 $server = new rabbitMQServer("testRabbitMQ.ini","Q");
