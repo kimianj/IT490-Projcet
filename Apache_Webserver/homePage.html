@@ -133,7 +133,7 @@
 	-ms-transform: rotate(-45deg);
 }
 
-.searchbutton {
+.searchbtn {
 	position: absolute;
 	font-size: 22px;
 	width: 100%;
@@ -143,7 +143,7 @@
 
 }
 
-.search:focus + .searchbutton {
+.search:focus + .searchbtn {
 	transition-duration: 0.4s;
 	-moz-transition-duration: 0.4s;
 	-webkit-transition-duration: 0.4s;
@@ -154,7 +154,7 @@
 
 .search {
 	position: absolute;
-	left: 49px; /* Button width-1px (Not 50px/100% because that will sometimes show a 1px line between the search box and button) */
+	left: 49px;
 	background-color: white;
 	outline: none;
 	border: none;
@@ -206,8 +206,8 @@
             <li><a href="#">About Us</a></li>
             <div class="search-container">
                 <form action="/search" method="get">
-                    <input class="search expandright" id="searchright" type="search" name="q" placeholder="Search">
-                    <label class="button searchbutton" for="searchright"><span class="mglass">&#9906;</span></label>
+                    <input class="search expandright" id="searchright" type="search" placeholder="Search">
+                    <label class="button searchbtn" for="searchright"><span class="mglass">&#9906;</span></label>
                 </form>
         </ul>
     </nav>
