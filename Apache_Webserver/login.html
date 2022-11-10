@@ -1,55 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+    <style>
+        html{
+            background-color: black;
+        }
+         #nav_menu ul {
+            display: flex;
+            flex-basis: 100%;
+            justify-content: space-between;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            opacity: 0.7;
+        }
+         #nav_menu ul li {
+            flex-basis: 20%;
+        }
+        #nav_menu ul li a {
+            display: block;
+            text-align: center;
+            padding: 1em 0;
+            text-decoration: none;
+            /*background-color: rgb(128, 179, 176);*/
+            color: white;
+            font-weight: bold;
+            font-family: 'Caveat', cursive;
+            font-size: 36px;
+        }
+        #nav_menu a.current {
+            color: white;
+        }
+        #nav_menu ul ul {
+            width: 100%;
+            display: none;
+            position: absolute;
+            top: 100%;
+        }
+        #nav_menu > ul::after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+        #nav_menu ul li ul {
+            width: 20%;
+        }
+        #nav_menu a:hover {
+            border-bottom: 3px solid red;
+            color: white;
+            }
+            #nav_menu a.active {
+            border-bottom: 3px solid red;
+        }   
+        .topnav {
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+        .anti-hero{
+            width:30rem;
+            height: 40rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
+        .unholy{
+            width:40rem;
+            height: 40rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .play{
+            width:5rem;
+            height: 5rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        body {
+	font-family: sans-serif;
+	background-color: #111;
+}
+
+.button {
+	display: inline-block;
+	margin: 4px 2px;
+	background-color: rgb(0, 0, 0);
+	font-size: 14px;
+	padding-left: 32px;
+	padding-right: 32px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	color: white;
+	text-decoration: none;
+	cursor: pointer;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+    float: right;
+}
+
+.button:hover {
+	transition-duration: 0.4s;
+	-moz-transition-duration: 0.4s;
+	-webkit-transition-duration: 0.4s;
+	-o-transition-duration: 0.4s;
+	background-color: rgb(255, 1, 1);
+	color: black;
+}
+
+.search-container {
+	position: relative;
+	display: inline-block;
+	margin: 4px 2px;
+	height: 50px;
+	width: 50px;
+	vertical-align: bottom;
+    float: right;
+
+}
+
+.mglass {
+	display: inline-block;
+	pointer-events: none;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+}
+
+.searchbtn {
+	position: absolute;
+	font-size: 22px;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+    float: right;
+
+}
+
+.search:focus + .searchbtn {
+	transition-duration: 0.4s;
+	-moz-transition-duration: 0.4s;
+	-webkit-transition-duration: 0.4s;
+	-o-transition-duration: 0.4s;
+	background-color: white;
+	color: black;
+}
+
+.search {
+	position: absolute;
+	left: 49px;
+	background-color: white;
+	outline: none;
+	border: none;
+	padding: 0;
+	width: 0;
+	height: 100%;
+	z-index: 10;
+	transition-duration: 0.4s;
+	-moz-transition-duration: 0.4s;
+	-webkit-transition-duration: 0.4s;
+	-o-transition-duration: 0.4s;
+    float: right;
+
+}
+
+.search:focus {
+	width: 363px; /* Bar width+1px */
+	padding: 0 16px 0 0;
+}
+
+.expandright {
+	left: auto;
+	right: 49px; /* Button width-1px */
+}
+
+.expandright:focus {
+	padding: 0 0 0 16px;
+}
+
+        
+</style>
+
+        </style>
     <head>
-        <title>Login</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,0" />
+
     </head>
-
     <body>
-  
-        <div class = "curve">
-
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="0.6" 
-                d="M0,288L0,256L75.8,256L75.8,96L151.6,96L151.6,192L227.4,192L227.4,0L303.2,0L303.2,128L378.9,128L378.9,
-                96L454.7,96L454.7,192L530.5,192L530.5,160L606.3,160L606.3,224L682.1,224L682.1,64L757.9,64L757.9,192L833.7,
-                192L833.7,0L909.5,0L909.5,192L985.3,192L985.3,288L1061.1,288L1061.1,224L1136.8,224L1136.8,160L1212.6,160L1212.6,
-                128L1288.4,128L1288.4,192L1364.2,192L1364.2,192L1440,192L1440,0L1364.2,0L1364.2,0L1288.4,0L1288.4,0L1212.6,
-                0L1212.6,0L1136.8,0L1136.8,0L1061.1,0L1061.1,0L985.3,0L985.3,0L909.5,0L909.5,0L833.7,0L833.7,0L757.9,0L757.9,0L682.1,
-                0L682.1,0L606.3,0L606.3,0L530.5,0L530.5,0L454.7,0L454.7,0L378.9,0L378.9,0L303.2,0L303.2,0L227.4,0L227.4,0L151.6,0L151.6,
-                0L75.8,0L75.8,0L0,0L0,0Z"></path></svg>
-
-                <h1>
-                    Welcome to the world of sounds!
-                </h1>
-
-                <div id="bg"></div>
-
-                  <form action="rabbitMQLoginClient.php" class="login" method="post">
-                <div class="form-field">
-                    <label for="username"></label><input id="username" placeholder="Username" name="username" required/>
-                </div>
-
-                <div class="form-field">
-                    <label for="password"></label><input id="password" placeholder="Password" name="password" required/>                   >
-                </div>
-
-                <div class="form-field">
-                    <button class="btn" type="submit">Log in</button>
-                </div>
+        <nav id="mobile_menu"></nav>
+    <nav id="nav_menu">
+        <ul>
+            <li><a href="#" class="current">Home</a></li>
+            <li><a href="#">Artists</a></li>
+            <li><a href="#">Discover</a>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">About Us</a></li>
+            <div class="search-container">
+                <form action="search.html" method="get">
+                    <input class="search expandright" id="searchright" type="search" placeholder="Search">
+                    <label class="button searchbtn" for="searchright"><span class="mglass">&#9906;</span></label>
                 </form>
+        </ul>
+    </nav>
 
-        </div>
 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#D2042D" fill-opacity="0.6" 
-            d="M0,0L0,224L60,224L60,224L120,224L120,288L180,288L180,160L240,160L240,0L300,0L300,64L360,64L360,
-            64L420,64L420,320L480,320L480,288L540,288L540,192L600,192L600,64L660,64L660,192L720,192L720,160L780,
-            160L780,32L840,32L840,192L900,192L900,32L960,32L960,160L1020,160L1020,256L1080,256L1080,224L1140,
-            224L1140,0L1200,0L1200,32L1260,32L1260,64L1320,64L1320,0L1380,0L1380,96L1440,96L1440,320L1380,
-            320L1380,320L1320,320L1320,320L1260,320L1260,320L1200,320L1200,320L1140,320L1140,320L1080,320L1080,
-            320L1020,320L1020,320L960,320L960,320L900,320L900,320L840,320L840,320L780,320L780,320L720,320L720,
-            320L660,320L660,320L600,320L600,320L540,320L540,320L480,320L480,320L420,320L420,320L360,320L360,
-            320L300,320L300,320L240,320L240,320L180,320L180,320L120,320L120,320L60,320L60,320L0,320L0,320Z"></path>
-        </svg>
+    <div>
+        <img src="anti-hero.jpg" alt = "anti-hero" class="anti-hero">
+            <img src = "play.png" class="play">
+    </div>
+    <br>
+    <br>
+    <br>
 
+    <div>
+        <img src="Unholy1.jpg" alt = "Unholy" class="unholy">
+            <img src = "play.png" class="play">
+    </div>
+    
+    <br>
+    <br>
+    <br>
+    <div>
+        <img src="badhabit.png" alt = "badhabit" class="unholy">
+            <img src = "play.png" class="play">
+    </div>
     </body>
 </html>
