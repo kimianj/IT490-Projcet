@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html{
+            background-color: black;
+        }
+
+        #nav_menu ul {
+            display: flex;
+            flex-basis: 100%;
+            justify-content: space-between;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            opacity: 0.7;
+        }
+         #nav_menu ul li {
+            flex-basis: 20%;
+        }
+        #nav_menu ul li a {
+            display: block;
+            text-align: center;
+            padding: 1em 0;
+            text-decoration: none;
+            /*background-color: rgb(128, 179, 176);*/
+            color: white;
+            font-weight: bold;
+            font-family: 'Caveat', cursive;
+            font-size: 36px;
+        }
+        #nav_menu a.current {
+            color: white;
+        }
+        #nav_menu ul ul {
+            width: 100%;
+            display: none;
+            position: absolute;
+            top: 100%;
+        }
+        #nav_menu > ul::after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+        #nav_menu ul li ul {
+            width: 20%;
+        }
+        #nav_menu a:hover {
+            border-bottom: 3px solid red;
+            color: white;
+            }
+            #nav_menu a.active {
+            border-bottom: 3px solid red;
+        }   
+        .topnav {
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+        .button {
+            display: inline-block;
+            margin: 4px 2px;
+            background-color: rgb(0, 0, 0);
+            font-size: 14px;
+            padding-left: 32px;
+            padding-right: 32px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            float: right;
+        }
+
+        .button:hover {
+            transition-duration: 0.4s;
+            -moz-transition-duration: 0.4s;
+            -webkit-transition-duration: 0.4s;
+            -o-transition-duration: 0.4s;
+            background-color: rgb(255, 1, 1);
+            color: black;
+        }
+
+        .search-container {
+            position: relative;
+            display: inline-block;
+            margin: 4px 2px;
+            height: 50px;
+            width: 50px;
+            vertical-align: bottom;
+            float: right;
+
+        }
+
+        .mglass {
+            display: inline-block;
+            pointer-events: none;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+        }
+
+        .searchbtn {
+            position: absolute;
+            font-size: 22px;
+            width: 100%;
+            margin: 0;
+            margin-bottom: 30px;
+            padding: 0;
+            float: right;
+
+        }
+
+        .search:focus + .searchbtn {
+            transition-duration: 0.4s;
+            -moz-transition-duration: 0.4s;
+            -webkit-transition-duration: 0.4s;
+            -o-transition-duration: 0.4s;
+            background-color: white;
+            color: black;
+        }
+
+        .search {
+            position: absolute;
+            left: 49px;
+            background-color: white;
+            margin-bottom: 30px;
+            outline: none;
+            border: none;
+            padding: 0;
+            width: 0;
+            height: 100%;
+            z-index: 10;
+            transition-duration: 0.4s;
+            -moz-transition-duration: 0.4s;
+            -webkit-transition-duration: 0.4s;
+            -o-transition-duration: 0.4s;
+            float: right;
+
+        }
+
+        .search:focus {
+            width: 363px; 
+            padding: 0 16px 0 0;
+            margin-bottom: 30px;
+        }
+
+        .expandright {
+            left: auto;
+            right: 49px;
+        }
+
+        .expandright:focus {
+            padding: 0 0 0 16px;
+        }
+
+        p{
+            color: white;
+        }
+        article{
+            float: left;
+        }
+        aside{
+            float: right;
+        }
+        #event1Info{
+            margin-left: 100px;
+            font-size: 20px;
+        }
+        .eventImage1{
+            width: 25rem;
+            height: 24rem;
+            margin-left: 60px;
+        }
+     
+
+    </style>
+    <head>
+        <h1>Find the Concerts you are looking for here</h1>
+
+    </head>
+    <body>
+        <nav id="mobile_menu"></nav>
+        <nav id="nav_menu">
+            <ul>
+                <li><a href="#" class="current">Home</a></li>
+                <li><a href="#">Artists</a></li>
+                <li><a href="#">Discover</a>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">About Us</a></li>
+                <div class="search-container">
+                    <form action="search.html" method="get">
+                        <input class="search expandright" id="searchright" type="search" placeholder="Search">
+                        <label class="button searchbtn" for="searchright"><span class="mglass">&#9906;</span></label>
+                    </form>
+            </ul>
+        </nav>
+        <!-- <main>
+            <section>
+                    <article> -->
+                        <!-- <p>
+                            This is the concert information.  Everything would be here.  This is Unholy album event
+                        </p> -->
+                        <!-- <img src="anti-hero.jpg" class="eventImage1">
+
+                    </article>
+                </section>
+            
+                <aside> -->
+                    <!-- <img src="Unholy1.jpg" alt="Room"> -->
+                    <!-- <p id="event1Info">
+                        This is the concert information.  Everything would be here.  This is anit-hero album event
+                    </p>
+                </aside>
+            </main>  
+             -->
+            <table>
+                <tr>
+                    <td>
+                        <img src="anti-hero.jpg" class="eventImage1">
+                        <!-- <img src="data:image/jpeg;base64,<?php echo base64_encode( $image_data ); ?>"/> -->
+
+                    </td>
+                    <td><p id="event1Info">
+                        This is the concert information.  Everything would be here.  This is anit-hero album event
+                    </p>
+                    </td>
+                </tr>
+                
+            </table>
+            <hr style="height:5px;border-width:0;color:#D2042D;background-color:#D2042D">
+
+            <table>
+                <tr>
+                    <td>
+                        <p id="event1Info">
+                        This is the concert information.  Everything would be here.  This is anit-hero album event
+                    </p>
+                    </td>
+                <td>
+                    <img src="Unholy1.jpg" class="eventImage1">
+                    <!-- <img src="data:image/jpeg;base64,<?php echo base64_encode( $image_data ); ?>"/> -->
+
+                </td>
+            </tr>
+            </table>
+            <hr style="height:5px;border-width:0;color:#0099ff;background-color:#0099ff">
+
+    </body>
+</html>
