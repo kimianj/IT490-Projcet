@@ -21,6 +21,30 @@ require_once('rabbitMQLib.inc');
         echo $authLink;
         return array("authLink" => $authLink);
     }
+    
+    function registerSongs($songs){
+    	$client = new rabbitMQClient("testRabbitMQ.ini","B");
+
+	$request = array();
+	$request['type'] = "songRegister";
+
+	$request['songs'] = array();
+	
+	for($i = 0; $i < count($songs); $i++){
+		$request['songs'][$i]['id'] = $songs[$i]['id'];
+		$request['songs'][$i]['title'] = $songs[$i]['name'];
+		$request['songs'][$i]['artistid'] = $songs[$i]['artists'][0]['id'];
+		$request['songs'][$i]['artistname'] = $songs[$i]['artists'][0]['name'];
+		foreach($songs[$i]['album']['images'] as $img){
+			if($i['width'] == 300){
+				$request['songs'][$i]['art300'] = $img['url'];
+			}
+		}
+	}
+
+	$response = $client->send_request($request);
+    }
+    
     function getAccTok() {
             $curl = curl_init();
             curl_setopt( $curl, CURLOPT_URL, 'https://accounts.spotify.com/api/token' );
@@ -49,10 +73,19 @@ require_once('rabbitMQLib.inc');
 
          $response = curl_exec($curl);
          curl_close( $curl );
-         return array("response" => $response);
+         
+         registerSongs($response['tracks']['items']);
+         
+         $songids = array();
+         
+         for($i = 0; $i < count($response['tracks']['items']); $i++){
+		$songids[$i] = $response['tracks']['items'][$i]['id'];
+	 }
+         
+         return array("returnCode" => '1', "songs" => $response);
     }
 
-    function getRecomendation($tracks) {
+    function getRecommendation($tracks) {
     	$trackList = "";
     	for ($i = 0; $i<count($tracks); $i+=1) {
     		if (i > 0) {
@@ -111,7 +144,7 @@ function requestProcessor($request) {
         return search($request["title"]);
         break;
     case "recommendations":
-        return getRecomendation($request["tracks"]);
+        return getRecommendation($request["tracks"]);
     case "events": 
     	return artistEvents($request["name"]); 
   }

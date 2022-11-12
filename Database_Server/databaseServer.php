@@ -96,6 +96,9 @@ function requestProcessor($request)
 			return array("returnCode" => '1', 'songs' => $s);
 		}
 		return array("returnCode" => '2', 'message'=>"Uh oh, something went wrong.");
+	case "songRegister":
+		registerSongs($request['songs']);
+		return array("returnCode" => '1');
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
