@@ -70,17 +70,31 @@
             This is a mockup for the search page.
         </h1>
         <div class="searchBar">
-            <form action="" class="search">
+            <form action= "search.php" class="search" method="post">
                 <input type="text" placeholder="Search" name="searching">
                 <button type="submit"><span class="mglass">&#9906;</span></button>
                 
             </form>
         </div>
+        <ul>
+            <li>
+                Unholy
+            </li>
+            <li>
+                <img src="Unholy1.jpg">
+            </li>
+            <li>
+                Unholy
+            </li>
+            <li>
+                Sam Smith ft. Kim Petras
+            </li>
+        </ul>
         <!-- <img src="data:image/jpeg;base64,<?php echo base64_encode( $image_data ); ?>"/> -->
-        <!-- <p>Unholy</p> -->
+        <!-- <p>Unholy</p>
         <img src="Unholy1.jpg">
         <p>Unholy</p>
-        <p>Sam Smith ft. Kim Petras </p>
+        <p>Sam Smith ft. Kim Petras </p> -->
 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#D2042D" fill-opacity="0.7" d="M0,288L6.3,245.3C12.6,203,25,117,38,
             74.7C50.5,32,63,32,76,74.7C88.4,117,101,203,114,197.3C126.3,192,139,96,152,53.3C164.2,11,177,21,189,
@@ -105,5 +119,20 @@
             320,316,320,303,320C290.5,320,278,320,265,320C252.6,320,240,320,227,320C214.7,320,202,320,189,320C176.8,
             320,164,320,152,320C138.9,320,126,320,114,320C101.1,320,88,320,76,320C63.2,320,51,320,38,320C25.3,320,13,320,6,320L0,320Z"></path></svg>
     </body>
+
+
+    <script>
+        fetch('search.php')
+            .then(res =>{
+                    returnres.json()
+            }
+            )
+            .then(data=>{
+                data.array.forEach(search => {
+                    const markUp = `<li>${song.artist}</li>`;
+                    document.querySelector('ul').insertAdjacentHTML('beforeend', markUp);
+                });
+            })
+    </script>
 
 </html>
