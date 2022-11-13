@@ -36,7 +36,7 @@ require_once('rabbitMQLib.inc');
 		$request['songs'][$i]['artistid'] = $songs[$i]['artists'][0]['id'];
 		$request['songs'][$i]['artistname'] = $songs[$i]['artists'][0]['name'];
 		foreach($songs[$i]['album']['images'] as $img){
-			if($i['width'] == 300){
+			if($img['width'] == 300){
 				$request['songs'][$i]['art300'] = $img['url'];
 			}
 		}
@@ -50,16 +50,16 @@ require_once('rabbitMQLib.inc');
             curl_setopt( $curl, CURLOPT_URL, 'https://accounts.spotify.com/api/token' );
             curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
             curl_setopt( $curl, CURLOPT_POST, 1 );
-            curl_setopt( $curl, CURLOPT_POSTFIELDS, http_build_query( $data ) );
-            curl_setopt( $curl, CURLOPT_HTTPHEADER, array( 'Authorization: Basic ' . base64_encode( $client_id . ':' . $client_secret ) ) );
+            curl_setopt( $curl, CURLOPT_POSTFIELDS,'grant_type=client_credentials' );
+            curl_setopt( $curl, CURLOPT_HTTPHEADER, array( 'Authorization: Basic ' . base64_encode( getClientID() . ':' . getSecret() ) ) );
 
             $response = curl_exec($curl);
             curl_close( $curl );
-            return array("response" => $response);
+            return $response;
 
-            if ( isset( $response->accToken ) ) {
+/*            if ( isset( $response->accToken ) ) {
                 header('Location: '. $response -> accToken);
-            }
+            } */
     }
 
     function search($title) {
@@ -69,20 +69,23 @@ require_once('rabbitMQLib.inc');
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt( $curl, CURLOPT_HTTPHEADER, array( 'Content-Type:application/json', 'Authorization: Bearer ' . $_GET['access'] ) );
+        $accTok = json_decode(getAccTok(),true);
+        var_dump($accTok);
+        curl_setopt( $curl, CURLOPT_HTTPHEADER, array ( 'Content-Type:application/json', 'Authorization: Bearer ' . $accTok["access_token"] ) );
 
          $response = curl_exec($curl);
          curl_close( $curl );
          
-         registerSongs($response['tracks']['items']);
+         var_dump($response);
+         registerSongs(json_decode($response, true)['tracks']['items']);
          
          $songids = array();
          
-         for($i = 0; $i < count($response['tracks']['items']); $i++){
-		$songids[$i] = $response['tracks']['items'][$i]['id'];
+         for($i = 0; $i < count(json_decode($response, true)['tracks']['items']); $i++){
+		$songids[$i] = json_decode($response, true)['tracks']['items'][$i]['id'];
 	 }
          
-         return array("returnCode" => '1', "songs" => $response);
+         return array("returnCode" => '1', "songs" => $songids);
     }
 
     function getRecommendation($tracks) {
