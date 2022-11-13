@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 require_once('path.inc');
 require_once('get_host_info.inc');
@@ -5,6 +6,16 @@ require_once('rabbitMQLib.inc');
 
 
 $client = new rabbitMQClient("testRabbitMQ.ini","speak");
+
+
+//if (isset($argv[1]))
+//{        	console.log(sessionStorage.getItem(id));
+ // $msg = $argv[1];		
+//}
+//else
+//{
+ // $msg = "test message";   		window.localStorage.setItem('id',", $sessionId, ");      	
+//}
 
 $username = $_POST['username'];
 $password= $_POST['password'];
@@ -31,11 +42,15 @@ $returnCode = $response["returnCode"];
 switch($returnCode){
 	case 1:
 		$sessionId = $response["sessionId"];
-		echo "<script>
-		sessionStorage.setItem('id',", $sessionId, ");
-        	let info = sessionStorage.getItem(id);
+		echo "<script type = 'text/javascript'>
+		sessionStorage.setItem('id',", $sessionId, ");				
+		let info = sessionStorage.getItem('id');
         	</script>";
-        	header("Location: /homepage.html");
+        	echo $sessionId;
+        	sleep(1);
+        	echo "<script type = 'text/javascript'>
+        	location.href='/homepage.html';
+        	</script>";
 			exit();
 
 		break;
