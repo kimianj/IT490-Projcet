@@ -11,7 +11,7 @@ $searchQuery = $_POST['searching'];
 $request = array();
 $request['type'] = "search";
 
-$request['title'] = $searchArray;
+$request['title'] = $searchQuery;
 
 $response = $client->send_request($request);
 
@@ -32,7 +32,11 @@ switch($returnCode){
 		sessionStorage.setItem('results',", $resultCodes, ");
         	let results = sessionStorage.getItem(results);
         	</script>";
-        	header("Location: /search.html");
+        	echo $resultCodes;
+        	sleep(1);
+        	echo "<script type = 'text/javascript'>
+        	location.href='/search.html';
+        	</script>";
 			exit();
 
 		break;
