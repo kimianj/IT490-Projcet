@@ -8,15 +8,6 @@ require_once('rabbitMQLib.inc');
 $client = new rabbitMQClient("testRabbitMQ.ini","speak");
 
 
-//if (isset($argv[1]))
-//{        	console.log(sessionStorage.getItem(id));
- // $msg = $argv[1];		
-//}
-//else
-//{
- // $msg = "test message";   		window.localStorage.setItem('id',", $sessionId, ");      	
-//}
-
 $username = $_POST['username'];
 $password= $_POST['password'];
 
