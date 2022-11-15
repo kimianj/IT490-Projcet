@@ -32,9 +32,9 @@ $returnCode = $response["returnCode"];
 
 switch($returnCode){
 	case 1:
-		$sessionId = $response["sessionId"];
+		$sessionid = $response["sessionId"];
 		echo "<script type = 'text/javascript'>
-		sessionStorage.setItem('id',", $sessionId, ");				
+		sessionStorage.setItem('id',", $sessionid, ");				
 		let info = sessionStorage.getItem('id');
         	</script>";
         	echo $sessionId;

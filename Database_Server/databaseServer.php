@@ -6,6 +6,7 @@ require_once('rabbitMQLib.inc');
 require_once('getDatabase.inc');
 require_once('login-register.inc');
 require_once('spotifyFunctions.inc');
+require_once('mysqlConnection.php');
 
 
 function makeNewSession($uid){

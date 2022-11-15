@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 
-$mydb = new mysqli('localhost', 'testUser','12345','db490');
+$mydb = new mysqli('localhost', 'root','Kirokoko2210!!','IT490');
 
 if($mydb->errno != 0)
 {
